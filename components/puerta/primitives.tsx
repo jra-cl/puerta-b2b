@@ -43,7 +43,7 @@ export function PageHeader({
     <header className="mb-6 flex flex-wrap items-end justify-between gap-4">
       <div>
         <p className="text-xs font-medium uppercase tracking-[0.2em] text-gold/80">{eyebrow}</p>
-        <h1 className="mt-1 font-display text-3xl font-semibold text-balance text-foreground md:text-4xl">
+        <h1 className="mt-1 font-display text-3xl font-semibold uppercase tracking-wide text-balance text-foreground md:text-4xl">
           {title}
         </h1>
       </div>
@@ -175,7 +175,7 @@ export function Modal({
         <div className="p-6">
           <div className="mb-5 flex items-start justify-between gap-4">
             <div>
-              <h2 id="modal-title" className="font-display text-2xl font-semibold">
+              <h2 id="modal-title" className="font-display text-2xl font-semibold uppercase tracking-wide">
                 {title}
               </h2>
               {description && <p className="mt-1 text-sm text-muted-foreground">{description}</p>}

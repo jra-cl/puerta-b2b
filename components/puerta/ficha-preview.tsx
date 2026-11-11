@@ -62,7 +62,7 @@ export function FichaPreview({
             id="ficha-nombre"
             value={ficha.nombre}
             onChange={(e) => set({ nombre: e.target.value })}
-            className="w-full bg-transparent font-display text-2xl font-semibold text-foreground focus:outline-none"
+            className="w-full bg-transparent font-display text-2xl font-semibold uppercase tracking-wide text-foreground focus:outline-none"
           />
           <p className="text-xs text-muted-foreground">
             {ficha.fecha} · {ficha.genero}

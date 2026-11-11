@@ -1,9 +1,10 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { Check, Copy, ImageUp, Loader2, Sparkles, Trash2, Wand2 } from 'lucide-react'
-import { Btn, Modal, PageHeader, Panel, PanelTitle, Tag } from './primitives'
+import { Check, Copy, ImageUp, Loader2, PencilLine, Smartphone, Sparkles, Trash2, Wand2 } from 'lucide-react'
+import { Btn, Modal, PageHeader, Panel, PanelTitle, Tag, inputClass } from './primitives'
 import { FichaPreview, isFichaValid } from './ficha-preview'
+import { AppPreview } from './app-preview'
 import type { Ficha } from '@/lib/ficha'
 import type { EventItem } from '@/lib/mock-data'
 import { cn } from '@/lib/utils'
@@ -29,6 +30,8 @@ export function EventBuilder({
   const [source, setSource] = useState<'ai' | 'local' | null>(null)
   const [published, setPublished] = useState<{ slug: string; nombre: string } | null>(null)
   const [copied, setCopied] = useState<string | null>(null)
+  const [venue, setVenue] = useState('Club Subterráneo, Bellavista')
+  const [view, setView] = useState<'edit' | 'app'>('edit')
   const fileRef = useRef<HTMLInputElement>(null)
 
   function handleFile(file?: File) {
@@ -70,7 +73,8 @@ export function EventBuilder({
       id: `ev-${Date.now()}`,
       nombre: ficha.nombre,
       fecha: ficha.fecha,
-      local: 'Club Subterráneo · Bellavista',
+      local: venue,
+      cover: flyer?.url,
       aforo,
       vendidas: 0,
       recaudacion: 0,
@@ -161,6 +165,18 @@ export function EventBuilder({
           </div>
 
           <div className="flex flex-col gap-1.5">
+            <label htmlFor="event-venue" className="text-xs font-medium text-muted-foreground">
+              Local y comuna
+            </label>
+            <input
+              id="event-venue"
+              value={venue}
+              onChange={(e) => setVenue(e.target.value)}
+              className={inputClass}
+            />
+          </div>
+
+          <div className="flex flex-col gap-1.5">
             <label htmlFor="event-prompt" className="text-xs font-medium text-muted-foreground">
               Descripción libre del evento
             </label>
@@ -218,7 +234,34 @@ export function EventBuilder({
           )}
           {!loading && ficha && (
             <>
-              <FichaPreview ficha={ficha} onChange={setFicha} valid={valid} />
+              <div role="tablist" aria-label="Modo de la ficha" className="mb-4 grid grid-cols-2 gap-1 rounded-full border border-border bg-surface p-1">
+                {(
+                  [
+                    ['edit', 'Editar ficha', PencilLine],
+                    ['app', 'Vista en la app', Smartphone],
+                  ] as const
+                ).map(([id, label, Icon]) => (
+                  <button
+                    key={id}
+                    role="tab"
+                    type="button"
+                    aria-selected={view === id}
+                    onClick={() => setView(id)}
+                    className={cn(
+                      'flex items-center justify-center gap-1.5 rounded-full py-1.5 text-xs font-semibold transition-colors',
+                      view === id ? 'bg-gold text-[#1a1208]' : 'text-muted-foreground hover:text-foreground',
+                    )}
+                  >
+                    <Icon className="size-3.5" aria-hidden />
+                    {label}
+                  </button>
+                ))}
+              </div>
+              {view === 'edit' ? (
+                <FichaPreview ficha={ficha} onChange={setFicha} valid={valid} />
+              ) : (
+                <AppPreview ficha={ficha} venue={venue} cover={flyer?.url ?? '/covers/ultrabailable.png'} valid={valid} />
+              )}
               <Btn onClick={publish} disabled={!valid} variant="success" className="mt-5 h-12 text-base">
                 <Check className="size-4" aria-hidden />
                 Publicar Evento y Generar Links

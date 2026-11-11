@@ -1,13 +1,13 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono, Bodoni_Moda } from 'next/font/google'
+import { Geist, Geist_Mono, Oswald } from 'next/font/google'
 import './globals.css'
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-geist' })
 const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono' })
-const bodoni = Bodoni_Moda({
+const oswald = Oswald({
   subsets: ['latin'],
-  variable: '--font-display-serif',
+  variable: '--font-display-condensed',
   weight: ['500', '600', '700'],
 })
 
@@ -29,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es" className={`${geist.variable} ${geistMono.variable} ${bodoni.variable}`}>
+    <html lang="es" className={`${geist.variable} ${geistMono.variable} ${oswald.variable}`}>
       <body className="antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}

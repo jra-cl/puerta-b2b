@@ -10,12 +10,14 @@ export type EventItem = {
   recaudacion: number
   escaneados: number
   estado: 'activo' | 'borrador' | 'publicado'
+  cover?: string
   ficha: Ficha
 }
 
 export const EVENTS: EventItem[] = [
   {
     id: 'ev-1',
+    cover: '/covers/ultrabailable.png',
     nombre: 'Noche Ultrabailable',
     fecha: 'Viernes 13',
     local: 'Club Subterráneo · Bellavista',
@@ -41,6 +43,7 @@ export const EVENTS: EventItem[] = [
   },
   {
     id: 'ev-2',
+    cover: '/covers/techno.png',
     nombre: 'Sótano Techno Sessions',
     fecha: 'Sábado 14',
     local: 'Bodega Franklin',
@@ -66,6 +69,7 @@ export const EVENTS: EventItem[] = [
   },
   {
     id: 'ev-3',
+    cover: '/covers/reggaeton.png',
     nombre: 'Cumbia Rooftop Providencia',
     fecha: 'Jueves 19',
     local: 'Terraza Costanera',

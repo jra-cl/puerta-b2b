@@ -67,6 +67,10 @@ export function Overview({
       </PageHeader>
 
       <div className="mb-4 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+        {event.cover && (
+          // eslint-disable-next-line @next/next/no-img-element -- cover may be a local object URL
+          <img src={event.cover} alt="" className="size-8 rounded-md border border-gold/30 object-cover" />
+        )}
         <span>{event.local}</span>
         <span aria-hidden>·</span>
         {event.estado === 'activo' ? (
